@@ -1,5 +1,7 @@
 # ecommerce-3d-mcp
 
+> **Disclaimer:** Generated code, HTML embeds, and assets are provided "as is" without warranty. Review all generated content before deploying to production stores. This is not a substitute for professional web development review. See [TERMS.md](./TERMS.md) and [PRIVACY.md](./PRIVACY.md).
+
 MCP server for e-commerce 3D product visualization. Generate model-viewer embeds, AR try-on experiences, interactive product configurators, Shopify integrations, and SEO metadata — all from an AI assistant.
 
 ## Quick Start
@@ -138,6 +140,12 @@ npm run build
 npm test
 ```
 
+## Legal
+
+- [LICENSE](./LICENSE) — MIT License
+- [TERMS.md](./TERMS.md) — Terms of Service
+- [PRIVACY.md](./PRIVACY.md) — Privacy Policy (no data collected)
+
 ## License
 
-MIT
+MIT — see [LICENSE](./LICENSE).

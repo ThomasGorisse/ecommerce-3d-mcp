@@ -18,6 +18,16 @@ import {
 } from "./generators.js";
 
 // ---------------------------------------------------------------------------
+// Legal disclaimer
+// ---------------------------------------------------------------------------
+
+const DISCLAIMER = '\n\n---\n*Review all generated code before deploying to production. See [TERMS.md](https://github.com/thomasgorisse/ecommerce-3d-mcp/blob/main/TERMS.md).*';
+
+function addDisclaimer(text: string): string {
+  return text + DISCLAIMER;
+}
+
+// ---------------------------------------------------------------------------
 // Server setup
 // ---------------------------------------------------------------------------
 
@@ -98,7 +108,7 @@ server.tool(
       content: [
         {
           type: "text" as const,
-          text: html,
+          text: addDisclaimer(html),
         },
       ],
     };
@@ -155,7 +165,7 @@ server.tool(
     );
 
     return {
-      content: [{ type: "text" as const, text: html }],
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
     };
   },
 );
@@ -227,7 +237,7 @@ server.tool(
     );
 
     return {
-      content: [{ type: "text" as const, text: html }],
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
     };
   },
 );
@@ -280,7 +290,7 @@ server.tool(
     );
 
     return {
-      content: [{ type: "text" as const, text: report }],
+      content: [{ type: "text" as const, text: addDisclaimer(report) }],
     };
   },
 );
@@ -325,7 +335,7 @@ server.tool(
     );
 
     return {
-      content: [{ type: "text" as const, text: html }],
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
     };
   },
 );
@@ -353,7 +363,7 @@ server.tool(
     );
 
     return {
-      content: [{ type: "text" as const, text: html }],
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
     };
   },
 );
@@ -397,7 +407,7 @@ server.tool(
     );
 
     return {
-      content: [{ type: "text" as const, text: html }],
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
     };
   },
 );
