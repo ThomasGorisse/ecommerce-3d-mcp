@@ -1,58 +1,20 @@
 {
-  "name": "ecommerce-3d-mcp",
-  "display_name": "E-Commerce 3D — Product Visualization MCP",
-  "description": "MCP server for e-commerce 3D product visualization. Generate model-viewer embeds, AR try-on experiences, product configurators, Shopify integrations, and SEO metadata for 3D products.",
-  "version": "1.0.0",
-  "author": "Thomas Gorisse",
-  "repository": "https://github.com/thomasgorisse/ecommerce-3d-mcp",
-  "transport": {
-    "type": "stdio",
-    "command": "npx",
-    "args": ["-y", "ecommerce-3d-mcp"]
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.ThomasGorisse/ecommerce-3d-mcp",
+  "description": "E-commerce 3D MCP — model viewers, AR try-on, product configurators, Shopify integration.",
+  "repository": {
+    "url": "https://github.com/ThomasGorisse/ecommerce-3d-mcp",
+    "source": "github"
   },
-  "tools": [
+  "version": "1.0.1",
+  "packages": [
     {
-      "name": "generate_product_3d",
-      "description": "Generate a <model-viewer> 3D embed for a product page"
-    },
-    {
-      "name": "create_ar_tryout",
-      "description": "Create an AR try-on experience (furniture, clothing, accessories)"
-    },
-    {
-      "name": "product_configurator",
-      "description": "Generate an interactive 3D product configurator"
-    },
-    {
-      "name": "optimize_3d_asset",
-      "description": "Optimization report + CLI commands for 3D web assets"
-    },
-    {
-      "name": "generate_turntable",
-      "description": "Create a 360° turntable animation embed"
-    },
-    {
-      "name": "shopify_snippet",
-      "description": "Generate Shopify Liquid code to embed 3D viewer"
-    },
-    {
-      "name": "seo_3d_metadata",
-      "description": "Generate schema.org structured data for 3D products"
+      "registryType": "npm",
+      "identifier": "ecommerce-3d-mcp",
+      "version": "1.0.1",
+      "transport": {
+        "type": "stdio"
+      }
     }
-  ],
-  "categories": ["e-commerce", "3d", "ar", "shopify"],
-  "pricing": {
-    "free": {
-      "renders_per_month": 25,
-      "price": 0
-    },
-    "growth": {
-      "renders_per_month": 500,
-      "price": 29
-    },
-    "enterprise": {
-      "renders_per_month": "unlimited",
-      "price": 99
-    }
-  }
+  ]
 }
