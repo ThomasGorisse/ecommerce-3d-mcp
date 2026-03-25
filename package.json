@@ -1,6 +1,6 @@
 {
   "name": "ecommerce-3d-mcp",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "MCP server for e-commerce 3D product visualization — model viewers, AR try-on, product configurators, Shopify integration",
   "type": "module",
   "main": "dist/index.js",
@@ -27,7 +27,7 @@
     "configurator",
     "webxr"
   ],
-  "author": "Thomas Gorisse",
+  "author": "SceneView Tools",
   "license": "MIT",
   "repository": {
     "type": "git",
