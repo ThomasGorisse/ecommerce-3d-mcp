@@ -33,10 +33,10 @@
   ],
   "author": "SceneView Tools",
   "license": "MIT",
-  "homepage": "https://github.com/sceneview/ecommerce-3d-mcp",
+  "homepage": "https://github.com/sceneview-tools/ecommerce-3d-mcp",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sceneview/ecommerce-3d-mcp.git"
+    "url": "https://github.com/sceneview-tools/ecommerce-3d-mcp.git"
   },
   "engines": {
     "node": ">=18"

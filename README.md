@@ -137,7 +137,7 @@ Edit each product and fill in the `model_3d_url` metafield with the CDN URL of y
 ## Development
 
 ```bash
-git clone https://github.com/sceneview/ecommerce-3d-mcp
+git clone https://github.com/sceneview-tools/ecommerce-3d-mcp
 cd ecommerce-3d-mcp
 npm install
 npm run build

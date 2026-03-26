@@ -86,4 +86,4 @@ If any provision of these Terms is found unenforceable, the remaining provisions
 
 ## 14. Contact
 
-SceneView Tools — [https://github.com/sceneview/ecommerce-3d-mcp](https://github.com/sceneview/ecommerce-3d-mcp)
+SceneView Tools — [https://github.com/sceneview-tools/ecommerce-3d-mcp](https://github.com/sceneview-tools/ecommerce-3d-mcp)
