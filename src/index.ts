@@ -6,7 +6,7 @@ import { z } from "zod";
 import { authenticate, recordRender, requiresTier } from "./auth.js";
 import { TIER_CONFIG } from "./types.js";
 import type { ConfiguratorOption } from "./types.js";
-import type { ARCategory } from "./generators.js";
+import type { ARCategory, SizeGuideCategory } from "./generators.js";
 import {
   generateModelViewerEmbed,
   createARTryOnEmbed,
@@ -14,7 +14,13 @@ import {
   generateOptimizationReport,
   generateTurntableEmbed,
   generateShopifySnippet,
+  generateShopifySnippetV2,
   generateSEO3DMetadata,
+  generateEnhancedSEO3DMetadata,
+  generateProductPage,
+  analyzeConversion,
+  generateSizeGuide,
+  generateWooCommerceSnippet,
 } from "./generators.js";
 
 // ---------------------------------------------------------------------------
@@ -33,7 +39,7 @@ function addDisclaimer(text: string): string {
 
 const server = new McpServer({
   name: "ecommerce-3d-mcp",
-  version: "1.0.0",
+  version: "2.0.0",
 });
 
 // ---------------------------------------------------------------------------
@@ -346,14 +352,44 @@ server.tool(
 
 server.tool(
   "shopify_snippet",
-  "Generate a Shopify Liquid snippet to embed a 3D product viewer in a Shopify store. Includes metafield setup instructions, Dawn theme integration, and AR support.",
+  "Generate a Shopify Liquid snippet to embed a 3D product viewer. Supports both legacy Liquid and Online Store 2.0 section format with theme editor settings, metafield references, and AR support.",
   {
     ...ProductSchema,
     enableAR: z.boolean().default(true).describe("Enable AR in Shopify viewer"),
     sectionId: z.string().default("product-3d-viewer").describe("HTML section ID"),
+    version: z.enum(["legacy", "2.0"]).default("2.0").describe("Shopify Liquid version — 'legacy' for classic themes, '2.0' for Online Store 2.0 (Dawn, Sense, Craft)"),
   },
   async (params) => {
-    const html = generateShopifySnippet(
+    const generator = params.version === "2.0" ? generateShopifySnippetV2 : generateShopifySnippet;
+    const html = generator(
+      {
+        name: params.name,
+        description: params.description,
+        modelUrl: params.modelUrl,
+      },
+      { ar: params.enableAR, sectionId: params.sectionId },
+    );
+
+    return {
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
+    };
+  },
+);
+
+// ---------------------------------------------------------------------------
+// Tool: woocommerce_snippet
+// ---------------------------------------------------------------------------
+
+server.tool(
+  "woocommerce_snippet",
+  "Generate a WooCommerce/WordPress plugin snippet to embed a 3D product viewer. Includes custom meta boxes for model URLs, model-viewer integration, and AR support.",
+  {
+    ...ProductSchema,
+    enableAR: z.boolean().default(true).describe("Enable AR in WooCommerce viewer"),
+    sectionId: z.string().default("product-3d-viewer").describe("HTML container ID"),
+  },
+  async (params) => {
+    const html = generateWooCommerceSnippet(
       {
         name: params.name,
         description: params.description,
@@ -374,7 +410,7 @@ server.tool(
 
 server.tool(
   "seo_3d_metadata",
-  "Generate schema.org structured data (JSON-LD) for products with 3D models. Improves search engine visibility for 3D/AR-enabled products. Includes Product, 3DModel, and Offer schemas.",
+  "Generate enhanced schema.org structured data (JSON-LD) for products with 3D models. Includes Product, 3DModel (GLB + USDZ), AggregateRating, MerchantReturnPolicy, and shipping details. Optimized for Google 3D/AR search badges.",
   {
     ...ProductSchema,
     price: z.number().optional().describe("Product price"),
@@ -385,10 +421,18 @@ server.tool(
       .describe("Stock status"),
     brand: z.string().optional().describe("Brand name"),
     sku: z.string().optional().describe("SKU / product ID"),
+    gtin: z.string().optional().describe("GTIN / EAN / UPC barcode"),
     url: z.string().optional().describe("Product page URL"),
+    usdzUrl: z.string().optional().describe("URL to .usdz model (iOS AR)"),
+    thumbnailUrl: z.string().optional().describe("3D model thumbnail image URL"),
+    ratingValue: z.number().optional().describe("Average rating (1-5)"),
+    reviewCount: z.number().optional().describe("Number of reviews"),
+    returnDays: z.number().optional().describe("Return policy — number of days"),
+    returnType: z.enum(["full", "exchange", "store-credit"]).optional().describe("Return policy type"),
+    freeShipping: z.boolean().default(false).describe("Free shipping available"),
   },
   async (params) => {
-    const html = generateSEO3DMetadata(
+    const html = generateEnhancedSEO3DMetadata(
       {
         name: params.name,
         description: params.description,
@@ -402,7 +446,181 @@ server.tool(
         availability: params.availability,
         brand: params.brand,
         sku: params.sku,
+        gtin: params.gtin,
         url: params.url,
+        usdzUrl: params.usdzUrl,
+        thumbnailUrl: params.thumbnailUrl,
+        aggregateRating:
+          params.ratingValue !== undefined && params.reviewCount !== undefined
+            ? { ratingValue: params.ratingValue, reviewCount: params.reviewCount }
+            : undefined,
+        returnPolicy:
+          params.returnDays !== undefined
+            ? { days: params.returnDays, type: params.returnType || "full" }
+            : undefined,
+        shippingFree: params.freeShipping,
+      },
+    );
+
+    return {
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
+    };
+  },
+);
+
+// ---------------------------------------------------------------------------
+// Tool: generate_product_page
+// ---------------------------------------------------------------------------
+
+server.tool(
+  "generate_product_page",
+  "Generate a complete Shopify-ready product page HTML with integrated 3D viewer, AR button, breadcrumbs, price, reviews, dimensions, and CTA. Choose from minimal, modern, or luxury themes.",
+  {
+    ...ProductSchema,
+    theme: z.enum(["minimal", "modern", "luxury"]).default("modern").describe("Page design theme"),
+    price: z.number().optional().describe("Product price"),
+    currency: z.string().default("USD").describe("Currency code"),
+    showARButton: z.boolean().default(true).describe("Show AR button"),
+    ctaText: z.string().default("Add to Cart").describe("Call-to-action button text"),
+    breadcrumbs: z.array(z.string()).optional().describe("Breadcrumb trail (e.g. ['Home', 'Furniture'])"),
+    ratingValue: z.number().optional().describe("Average rating (1-5)"),
+    reviewCount: z.number().optional().describe("Number of reviews"),
+  },
+  async (params) => {
+    const ctx = authenticate(params.apiKey);
+    if (!recordRender(params.apiKey)) {
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: `Render limit reached (${ctx.rendersUsed}/${ctx.rendersLimit}).`,
+          },
+        ],
+      };
+    }
+
+    const html = generateProductPage(
+      {
+        name: params.name,
+        description: params.description,
+        category: params.category,
+        imageUrls: params.imageUrls,
+        modelUrl: params.modelUrl,
+        dimensions: params.dimensions,
+      },
+      {
+        theme: params.theme,
+        price: params.price,
+        currency: params.currency,
+        showARButton: params.showARButton,
+        ctaText: params.ctaText,
+        breadcrumbs: params.breadcrumbs,
+        reviews:
+          params.ratingValue !== undefined && params.reviewCount !== undefined
+            ? { rating: params.ratingValue, count: params.reviewCount }
+            : undefined,
+      },
+    );
+
+    return {
+      content: [{ type: "text" as const, text: addDisclaimer(html) }],
+    };
+  },
+);
+
+// ---------------------------------------------------------------------------
+// Tool: analyze_conversion
+// ---------------------------------------------------------------------------
+
+server.tool(
+  "analyze_conversion",
+  "Analyze a 3D product page and generate actionable tips to improve conversion rates. Scores the page (0-100) based on 3D model, AR, performance, mobile, SEO, and interactivity best practices.",
+  {
+    hasModel: z.boolean().default(false).describe("Product page has a 3D model viewer"),
+    hasAR: z.boolean().default(false).describe("AR try-on/placement is available"),
+    hasMultipleAngles: z.boolean().default(false).describe("Multiple camera angles / turntable"),
+    hasConfigurator: z.boolean().default(false).describe("Interactive configurator available"),
+    loadTimeSec: z.number().optional().describe("3D model load time in seconds"),
+    modelSizeMB: z.number().optional().describe("3D model file size in MB"),
+    hasPosterImage: z.boolean().default(false).describe("Poster image shown while loading"),
+    isMobileOptimized: z.boolean().default(false).describe("Page is mobile-optimized"),
+    hasStructuredData: z.boolean().default(false).describe("Has schema.org 3DModel data"),
+    category: z.string().optional().describe("Product category (furniture, clothing, etc.)"),
+  },
+  async (params) => {
+    const result = analyzeConversion({
+      hasModel: params.hasModel,
+      hasAR: params.hasAR,
+      hasMultipleAngles: params.hasMultipleAngles,
+      hasConfigurator: params.hasConfigurator,
+      loadTimeSec: params.loadTimeSec,
+      modelSizeMB: params.modelSizeMB,
+      hasPosterImage: params.hasPosterImage,
+      isMobileOptimized: params.isMobileOptimized,
+      hasStructuredData: params.hasStructuredData,
+      category: params.category,
+    });
+
+    return {
+      content: [{ type: "text" as const, text: addDisclaimer(result.summary) }],
+    };
+  },
+);
+
+// ---------------------------------------------------------------------------
+// Tool: generate_size_guide
+// ---------------------------------------------------------------------------
+
+server.tool(
+  "generate_size_guide",
+  "Generate an AR-based size guide for clothing, footwear, furniture, or accessories. Includes measurement instructions, size chart, international conversion table, and optional AR model for real-world sizing.",
+  {
+    ...ProductSchema,
+    sizeCategory: z
+      .enum(["clothing", "footwear", "furniture", "accessories"])
+      .describe("Product size category"),
+    sizes: z
+      .array(
+        z.object({
+          label: z.string().describe("Size label (e.g. 'S', 'M', 'L')"),
+          measurements: z.record(z.string(), z.number()).describe("Measurement name to value map"),
+          unit: z.string().optional().describe("Measurement unit (default: cm)"),
+        }),
+      )
+      .optional()
+      .describe("Custom size chart data"),
+    enableAR: z.boolean().default(true).describe("Enable AR measurement feature"),
+    showConversionChart: z.boolean().default(true).describe("Show international size conversion"),
+    targetRegions: z.array(z.string()).default(["US", "EU", "UK"]).describe("Regions for size conversion"),
+  },
+  async (params) => {
+    const ctx = authenticate(params.apiKey);
+    if (!recordRender(params.apiKey)) {
+      return {
+        content: [
+          {
+            type: "text" as const,
+            text: `Render limit reached (${ctx.rendersUsed}/${ctx.rendersLimit}).`,
+          },
+        ],
+      };
+    }
+
+    const html = generateSizeGuide(
+      {
+        name: params.name,
+        description: params.description,
+        category: params.category,
+        imageUrls: params.imageUrls,
+        modelUrl: params.modelUrl,
+        dimensions: params.dimensions,
+      },
+      {
+        category: params.sizeCategory as SizeGuideCategory,
+        sizes: params.sizes,
+        enableAR: params.enableAR,
+        showConversionChart: params.showConversionChart,
+        targetRegions: params.targetRegions,
       },
     );
 
