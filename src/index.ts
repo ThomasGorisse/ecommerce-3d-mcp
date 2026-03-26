@@ -27,7 +27,7 @@ import {
 // Legal disclaimer
 // ---------------------------------------------------------------------------
 
-const DISCLAIMER = '\n\n---\n*Review all generated code before deploying to production. See [TERMS.md](https://github.com/thomasgorisse/ecommerce-3d-mcp/blob/main/TERMS.md).*';
+const DISCLAIMER = '\n\n---\n*Review all generated code before deploying to production. See [TERMS.md](https://github.com/sceneview/ecommerce-3d-mcp/blob/main/TERMS.md).*';
 
 function addDisclaimer(text: string): string {
   return text + DISCLAIMER;

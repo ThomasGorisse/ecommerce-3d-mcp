@@ -1,5 +1,9 @@
 # ecommerce-3d-mcp
 
+[![npm version](https://img.shields.io/npm/v/ecommerce-3d-mcp)](https://www.npmjs.com/package/ecommerce-3d-mcp)
+[![tests](https://img.shields.io/badge/tests-124%20passed-brightgreen)](#)
+[![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
+
 > **Disclaimer:** Generated code, HTML embeds, and assets are provided "as is" without warranty. Review all generated content before deploying to production stores. This is not a substitute for professional web development review. See [TERMS.md](./TERMS.md) and [PRIVACY.md](./PRIVACY.md).
 
 MCP server for e-commerce 3D product visualization. Generate model-viewer embeds, AR try-on experiences, interactive product configurators, Shopify integrations, and SEO metadata — all from an AI assistant.
@@ -133,7 +137,7 @@ Edit each product and fill in the `model_3d_url` metafield with the CDN URL of y
 ## Development
 
 ```bash
-git clone https://github.com/thomasgorisse/ecommerce-3d-mcp
+git clone https://github.com/sceneview/ecommerce-3d-mcp
 cd ecommerce-3d-mcp
 npm install
 npm run build

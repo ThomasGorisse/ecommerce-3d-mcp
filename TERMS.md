@@ -14,7 +14,7 @@ ecommerce-3d-mcp is a Model Context Protocol (MCP) server that provides AI assis
 
 THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
 
-Thomas Gorisse makes no warranty that:
+SceneView Tools makes no warranty that:
 - The Service will meet your requirements
 - The Service will be uninterrupted, timely, secure, or error-free
 - Generated HTML, code, or embeds will be free of bugs or security vulnerabilities
@@ -36,9 +36,9 @@ All code, HTML embeds, Shopify snippets, SEO metadata, and other content generat
 
 ## 5. Limitation of Liability
 
-IN NO EVENT SHALL THOMAS GORISSE OR ANY CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES (INCLUDING BUT NOT LIMITED TO LOSS OF REVENUE, LOSS OF CUSTOMERS, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS, OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SERVICE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+IN NO EVENT SHALL SCENEVIEW TOOLS OR ANY CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES (INCLUDING BUT NOT LIMITED TO LOSS OF REVENUE, LOSS OF CUSTOMERS, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, LOSS OF USE, DATA, OR PROFITS, OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SERVICE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-**Maximum liability:** In no event shall the total aggregate liability exceed the amount paid by you to Thomas Gorisse for the Service in the twelve (12) months preceding the claim, or EUR 0 (zero) if no payment was made.
+**Maximum liability:** In no event shall the total aggregate liability exceed the amount paid by you to SceneView Tools for the Service in the twelve (12) months preceding the claim, or EUR 0 (zero) if no payment was made.
 
 ## 6. Not Professional Advice
 
@@ -62,7 +62,7 @@ You agree that:
 
 ## 9. Service Availability
 
-Thomas Gorisse reserves the right to:
+SceneView Tools reserves the right to:
 - Modify, suspend, or discontinue the Service at any time without notice
 - Update these Terms at any time; continued use constitutes acceptance
 - Limit or restrict access to the Service at any time
@@ -86,4 +86,4 @@ If any provision of these Terms is found unenforceable, the remaining provisions
 
 ## 14. Contact
 
-Thomas Gorisse — [https://github.com/thomasgorisse/ecommerce-3d-mcp](https://github.com/thomasgorisse/ecommerce-3d-mcp)
+SceneView Tools — [https://github.com/sceneview/ecommerce-3d-mcp](https://github.com/sceneview/ecommerce-3d-mcp)
