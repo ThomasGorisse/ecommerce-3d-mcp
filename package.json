@@ -1,7 +1,7 @@
 {
   "name": "ecommerce-3d-mcp",
-  "version": "2.0.4",
-  "description": "MCP server for e-commerce 3D product visualization — model viewers, AR try-on, product configurators, Shopify/WooCommerce integration, conversion optimization, size guides",
+  "version": "2.0.5",
+  "description": "MCP server for e-commerce 3D product visualization \u2014 model viewers, AR try-on, product configurators, Shopify/WooCommerce integration, conversion optimization, size guides",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -56,7 +56,7 @@
     "typescript": "^5.8.3",
     "vitest": "^3.1.4"
   },
-  "mcpName": "io.github.sceneview/ecommerce-3d-mcp",
+  "mcpName": "io.github.sceneview-tools/ecommerce-3d-mcp",
   "funding": [
     {
       "type": "github",

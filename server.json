@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.ThomasGorisse/ecommerce-3d-mcp",
-  "description": "E-commerce 3D MCP — model viewers, AR try-on, product configurators, Shopify integration.",
+  "name": "io.github.sceneview-tools/ecommerce-3d-mcp",
+  "description": "E-commerce 3D MCP \u2014 model viewers, AR try-on, product configurators, Shopify integration.",
   "repository": {
-    "url": "https://github.com/ThomasGorisse/ecommerce-3d-mcp",
+    "url": "https://github.com/sceneview-tools/ecommerce-3d-mcp",
     "source": "github"
   },
   "version": "1.0.1",
